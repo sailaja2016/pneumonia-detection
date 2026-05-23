@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pneumonia Detection </title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<!-- ─── Navigation ─── -->
+<nav class="navbar">
+    <div class="nav-brand">
+        <span class="nav-icon">🫁</span>
+        <span>PneumoDetect </span>
+    </div>
+    <div class="nav-links">
+        <a href="#about">About</a>
+        <a href="#how-it-works">How It Works</a>
+        <a href="#upload">Detect Now</a>
+    </div>
+</nav>
+
+<!-- ─── Hero Section ─── -->
+<section class="hero">
+    <div class="hero-content">
+        <div class="hero-badge">🤖 Deep Learning Powered</div>
+        <h1 class="hero-title">Pneumonia Detection<br><span class="gradient-text">Using CNN</span></h1>
+        <p class="hero-subtitle">
+            Upload a chest X-ray image and get an instant screening result
+            with risk level assessment and personalized medical guidance.
+        </p>
+        <a href="#upload" class="btn-primary">Start Detection →</a>
+        <p class="disclaimer">⚠️ For screening support only. Not a substitute for professional medical diagnosis.</p>
+    </div>
+    <div class="hero-visual">
+        <div class="lung-card">
+            <div class="pulse-ring"></div>
+            <div class="lung-icon">🫁</div>
+            <div class="scan-line"></div>
+        </div>
+    </div>
+</section>
+
+<!-- ─── Features ─── -->
+<section class="features" id="about">
+    <div class="container">
+        <h2 class="section-title">What This System Does</h2>
+        <div class="feature-grid">
+            <div class="feature-card">
+                <div class="feature-icon">📤</div>
+                <h3>Upload X-Ray</h3>
+                <p>Simply upload a chest X-ray image in JPG or PNG format through our easy interface.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🧠</div>
+                <h3>Analysis</h3>
+                <p>Our CNN deep learning model analyzes the image to detect pneumonia patterns instantly.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">📊</div>
+                <h3>Risk Level</h3>
+                <p>Get a clear Low / Medium / High risk assessment based on prediction confidence.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">💊</div>
+                <h3>Medical Guidance</h3>
+                <p>Receive personalized medical tips and next-step recommendations for your result.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ─── How It Works ─── -->
+<section class="how-it-works" id="how-it-works">
+    <div class="container">
+        <h2 class="section-title">How It Works</h2>
+        <div class="steps">
+            <div class="step">
+                <div class="step-number">01</div>
+                <h3>Upload X-Ray</h3>
+                <p>Select and upload your chest X-ray image (JPG/PNG, max 10MB)</p>
+            </div>
+            <div class="step-arrow">→</div>
+            <div class="step">
+                <div class="step-number">02</div>
+                <h3>Processing</h3>
+                <p>The CNN model preprocesses and analyzes the image automatically</p>
+            </div>
+            <div class="step-arrow">→</div>
+            <div class="step">
+                <div class="step-number">03</div>
+                <h3>Get Results</h3>
+                <p>View your prediction, risk level, and personalized medical tips</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ─── Upload Section ─── -->
+<section class="upload-section" id="upload">
+    <div class="container">
+        <h2 class="section-title">Upload Your X-Ray</h2>
+        <p class="section-subtitle">Supports JPG and PNG images up to 10MB</p>
+
+        <!-- Flash Messages -->
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <div class="flash-messages">
+                    {% for message in messages %}
+                        <div class="flash-error">⚠️ {{ message }}</div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        <div class="upload-card">
+            <form action="/predict" method="POST" enctype="multipart/form-data" id="uploadForm">
+                <div class="drop-zone" id="dropZone">
+                    <div class="drop-zone-content" id="dropZoneContent">
+                        <div class="upload-icon">📁</div>
+                        <p class="drop-text">Drag & Drop your X-ray image here</p>
+                        <p class="drop-subtext">or click to browse files</p>
+                        <p class="drop-formats">Accepted: JPG, JPEG, PNG &nbsp;|&nbsp; Max: 10MB</p>
+                    </div>
+                    <div class="preview-container" id="previewContainer" style="display:none;">
+                        <img id="imagePreview" src="" alt="X-Ray Preview">
+                        <p id="fileName" class="file-name"></p>
+                        <button type="button" class="btn-remove" onclick="removeFile()">✕ Remove</button>
+                    </div>
+                    <input type="file" name="file" id="fileInput" accept=".jpg,.jpeg,.png" hidden>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn-predict" id="predictBtn" disabled>
+                        <span id="btnText">🔍 Predict</span>
+                        <span id="btnLoading" style="display:none;">⏳ Analyzing...</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <p class="safety-note">
+            🔒 Your image is processed locally on the server and not shared with any third party.
+        </p>
+    </div>
+</section>
+
+<!-- ─── Footer ─── -->
+<footer class="footer">
+    <div class="container">
+        <p>🫁 PneumoDetect &nbsp;|&nbsp; Built with Flask + Deep Learning</p>
+        <p class="footer-sub">
+            This system is intended for academic and screening support purposes only.<br>
+            Always consult a licensed medical professional for diagnosis and treatment.
+        </p>
+    </div>
+</footer>
+
+<script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>

@@ -1,0 +1,12 @@
+venv/
+__pycache__/
+*.pyc
+*.pyo
+uploads/
+model/pneumonia_model.h5
+chest_xray/
+.env
+.DS_Store
+*.egg-info/
+dist/
+build/

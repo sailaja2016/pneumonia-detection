@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detection Result | PneumoDetect AI</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<!-- ─── Navigation ─── -->
+<nav class="navbar">
+    <div class="nav-brand">
+        <span class="nav-icon">🫁</span>
+        <span>PneumoDetect AI</span>
+    </div>
+    <div class="nav-links">
+        <a href="/">Home</a>
+        <a href="/#upload">New Scan</a>
+    </div>
+</nav>
+
+<!-- ─── Result Section ─── -->
+<section class="result-section">
+    <div class="container">
+
+        <!-- Demo Mode Notice -->
+        {% if demo_mode %}
+        <div class="demo-notice">
+            ⚠️ <strong>Demo Mode:</strong> No trained model was found at <code>model/pneumonia_model.h5</code>.
+            The result below is <em>randomly generated</em> for demonstration purposes only.
+            Add your trained model file to enable real predictions.
+        </div>
+        {% endif %}
+
+        <!-- Result Header -->
+        <div class="result-header">
+            <h1 class="result-title">Analysis Complete</h1>
+            <p class="result-subtitle">Here are the results for your chest X-ray screening</p>
+        </div>
+
+        <!-- Main Result Card -->
+        <div class="result-card result-{{ result_class }}">
+            <div class="result-icon">
+                {% if result_class == 'positive' %}🔴{% else %}🟢{% endif %}
+            </div>
+            <h2 class="result-label">{{ result_label }}</h2>
+            <p class="result-confidence">Confidence: <strong>{{ confidence }}%</strong></p>
+
+            <!-- Confidence Bar -->
+            <div class="confidence-bar-container">
+                <div class="confidence-bar" style="width: {{ confidence }}%; background: {{ risk_color }};"></div>
+            </div>
+
+            <!-- Risk Level Badge -->
+            <div class="risk-badge risk-{{ risk_level | lower }}" style="border-color: {{ risk_color }}; color: {{ risk_color }};">
+                <span class="risk-icon">
+                    {% if risk_level == 'Low' %}✅
+                    {% elif risk_level == 'Medium' %}⚠️
+                    {% else %}🚨{% endif %}
+                </span>
+                Risk Level: <strong>{{ risk_level }}</strong>
+            </div>
+        </div>
+
+        <!-- Medical Tips Card -->
+        <div class="tips-card">
+            <h3 class="tips-title">
+                💊 Medical Guidance & Recommendations
+            </h3>
+            <ul class="tips-list">
+                {% for tip in tips %}
+                <li class="tip-item">
+                    <span class="tip-bullet">•</span>
+                    {{ tip }}
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <!-- Disclaimer -->
+        <div class="disclaimer-card">
+            <p>
+                ⚠️ <strong>Important Disclaimer:</strong> This AI-powered screening tool is designed for
+                educational and preliminary screening support only. It is <strong>not a substitute</strong>
+                for professional medical advice, diagnosis, or treatment. Always consult a qualified
+                radiologist or physician for accurate medical evaluation.
+            </p>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="result-actions">
+            <a href="/" class="btn-primary">🔄 New Scan</a>
+            <button onclick="window.print()" class="btn-secondary">🖨️ Print Result</button>
+        </div>
+
+    </div>
+</section>
+
+<!-- ─── Footer ─── -->
+<footer class="footer">
+    <div class="container">
+        <p>🫁 PneumoDetect AI &nbsp;|&nbsp; Built with Flask + Deep Learning</p>
+        <p class="footer-sub">
+            This system is intended for academic and screening support purposes only.<br>
+            Always consult a licensed medical professional for diagnosis and treatment.
+        </p>
+    </div>
+</footer>
+
+</body>
+</html>
