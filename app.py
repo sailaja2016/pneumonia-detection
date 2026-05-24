@@ -51,19 +51,29 @@ def preprocess_image(file_path):
     """Resize, normalize and reshape image for the CNN model."""
     img = Image.open(file_path).convert('RGB')
     img = img.resize(IMG_SIZE)
-    img_array = np.array(img) / 255.0          # Normalize pixel values to [0, 1]
-    img_array = np.expand_dims(img_array, axis=0)  # Add batch dimension → (1, 150, 150, 3)
+    img_array = np.array(img) / 255.0
+    img_array = np.expand_dims(img_array, axis=0)
     return img_array
 
 
-def get_risk_level(confidence):
-    """Map prediction confidence to a human-readable risk level."""
-    if confidence < 0.40:
-        return "Low", "green"
-    elif confidence < 0.70:
-        return "Medium", "orange"
+def get_risk_level(confidence, is_pneumonia):
+    """Map prediction confidence + result to a human-readable risk level."""
+    if is_pneumonia:
+        # Pneumonia detected — higher confidence = more dangerous
+        if confidence >= 0.70:
+            return "High", "red"
+        elif confidence >= 0.40:
+            return "Medium", "orange"
+        else:
+            return "Low", "orange"
     else:
-        return "High", "red"
+        # Normal result — higher confidence = safer = lower risk
+        if confidence >= 0.70:
+            return "Low", "green"
+        elif confidence >= 0.40:
+            return "Medium", "orange"
+        else:
+            return "High", "red"
 
 
 def get_medical_tips(is_pneumonia, risk_level):
@@ -71,14 +81,14 @@ def get_medical_tips(is_pneumonia, risk_level):
     if is_pneumonia:
         tips = {
             "Low": [
-                "Consult a doctor for a formal diagnosis and confirmation.",
+                "Pneumonia indicators detected but confidence is low — consult a doctor for confirmation.",
                 "Rest adequately and stay hydrated.",
                 "Monitor symptoms closely — fever, cough, or breathing difficulty.",
                 "Avoid smoking or exposure to pollutants.",
                 "Maintain good hand hygiene to prevent spreading infection.",
             ],
             "Medium": [
-                "Seek medical attention promptly for proper evaluation.",
+                "Pneumonia detected with moderate confidence — seek medical attention promptly.",
                 "A doctor may prescribe antibiotics if bacterial pneumonia is confirmed.",
                 "Rest completely and avoid strenuous activities.",
                 "Use prescribed medications and complete the full course.",
@@ -86,7 +96,7 @@ def get_medical_tips(is_pneumonia, risk_level):
                 "Stay hydrated with warm fluids.",
             ],
             "High": [
-                "⚠️ Seek immediate medical attention or visit an emergency department.",
+                "⚠️ Pneumonia strongly detected — seek immediate medical attention.",
                 "Do NOT ignore symptoms — high-risk pneumonia can escalate quickly.",
                 "Hospital-level care including IV antibiotics or oxygen therapy may be needed.",
                 "Inform your doctor about any existing conditions (diabetes, heart disease, etc.).",
@@ -97,7 +107,7 @@ def get_medical_tips(is_pneumonia, risk_level):
     else:
         tips = {
             "Low": [
-                "Your X-ray appears normal — great news!",
+                "✅ Your X-ray appears normal with high confidence — great news!",
                 "Maintain good hygiene: wash hands regularly.",
                 "Stay up-to-date with flu and pneumococcal vaccinations.",
                 "Practice deep-breathing exercises (5 min/day) for lung health.",
@@ -105,24 +115,25 @@ def get_medical_tips(is_pneumonia, risk_level):
                 "Schedule annual respiratory check-ups if you're 60+ or have chronic conditions.",
             ],
             "Medium": [
-                "No clear pneumonia detected, but some irregularities were noted.",
+                "Your X-ray appears normal but confidence is moderate — worth a check-up.",
                 "Consult a doctor for a thorough examination to rule out early infection.",
                 "Rest well and stay hydrated.",
                 "Avoid cold environments and protect yourself from respiratory infections.",
                 "Monitor for symptoms like persistent cough, fever, or shortness of breath.",
             ],
             "High": [
-                "Results are borderline — professional medical review is strongly recommended.",
-                "Do not delay seeing a doctor even if symptoms are mild.",
+                "⚠️ No pneumonia detected but confidence is very low — results are uncertain.",
+                "Professional medical review is strongly recommended — do not rely on this result alone.",
+                "Do not delay seeing a doctor even if symptoms seem mild.",
                 "Get a complete blood count (CBC) and clinical examination.",
-                "Avoid self-diagnosis; let a radiologist review the X-ray.",
+                "Avoid self-diagnosis; let a radiologist review the X-ray in person.",
             ],
         }
     return tips.get(risk_level, tips["Low"])
 
 
 def demo_predict():
-    """Return a fixed demo result when no real model is available."""
+    """Return a random demo result when no real model is available."""
     import random
     confidence = round(random.uniform(0.20, 0.95), 4)
     is_pneumonia = confidence > 0.5
@@ -171,7 +182,7 @@ def predict():
             is_pneumonia, confidence = demo_predict()
 
         confidence_pct = round(confidence * 100, 2)
-        risk_level, risk_color = get_risk_level(confidence)
+        risk_level, risk_color = get_risk_level(confidence, is_pneumonia)
         tips = get_medical_tips(is_pneumonia, risk_level)
 
         result_label = "PNEUMONIA DETECTED" if is_pneumonia else "NORMAL (No Pneumonia)"
