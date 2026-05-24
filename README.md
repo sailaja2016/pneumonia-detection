@@ -5,11 +5,6 @@ using a Convolutional Neural Network (CNN), built with Python and Flask.
 
 ---
 
-## 🌐 Live Demo
-> Run locally by following the setup instructions below.
-
----
-
 ## 📌 About The Project:
 Pneumonia is a serious respiratory disease that requires early and accurate
 diagnosis. This project presents an automated pneumonia detection system using
