@@ -41,7 +41,7 @@ The system:
 | Layer             | Technology              |
 |-------------------|-------------------------|
 | Backend           | Python 3, Flask         |
-| Deep Learning     | TensorFlow              |
+| Deep Learning     | TensorFlow & Keras      |
 | Image Processing  | Pillow, NumPy           |
 | Frontend          | HTML5, CSS3, JavaScript |
 | Model Format      | HDF5 (.h5)              |
