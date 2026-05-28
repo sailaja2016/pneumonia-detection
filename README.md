@@ -13,12 +13,16 @@ deep learning techniques applied to chest X-ray images.
 ---
 
 Problem:
-- Pneumonia detection from chest X-rays is time-consuming
-- Manual diagnosis can be error-prone
+- Pneumonia is a common and potentially life-threatening lung infection that requires timely diagnosis and treatment. 
+- Manual analysis of chest X-ray images can be time-consuming and prone to human error, especially in high-volume healthcare settings. 
+- Patients cannot easily obtain quick preliminary insights without visiting a hospital.
+- Rural or small clinics may face delays due to limited specialist availability.
 
 Solution:
-- Built a CNN-based model to classify X-rays
-- Integrated into Flask web app
+- The proposed model utilizes convolutional neural networks (CNN) to classify images. 
+- The model analyzes chest X-ray images and classifies them as pneumonia-positive or normal.
+- The user-friendly interface provides quick digital results-positive or not, confidence, risk level along with medical tips.
+- Integrated into Flask web app.
 
 Results:
 - Accuracy: 80%
