@@ -12,23 +12,23 @@ deep learning techniques applied to chest X-ray images.
 
 ---
 
-Problem:
+## ⚠️ Problem:
 - Pneumonia is a common and potentially life-threatening lung infection that requires timely diagnosis and treatment. 
 - Manual analysis of chest X-ray images can be time-consuming and prone to human error, especially in high-volume healthcare settings. 
 - Patients cannot easily obtain quick preliminary insights without visiting a hospital.
 - Rural or small clinics may face delays due to limited specialist availability.
 
-Solution:
+## 💡 Solution:
 - The proposed model utilizes convolutional neural networks (CNN) to classify images. 
 - The model analyzes chest X-ray images and classifies them as pneumonia-positive or normal.
 - The user-friendly interface provides quick digital results-positive or not, confidence, risk level along with medical tips.
 - Integrated into Flask web app.
 
-Results:
+## 📈 Results:
 - Accuracy: 80%
 - Binary classification: Normal vs Pneumonia
 
-Screenshots:
+## 🖥️ Screenshots:
 <img width="1920" height="827" alt="Pneumodetect 1" src="https://github.com/user-attachments/assets/ee56e52e-45c4-44ee-8e6b-180fd29d6f48" />
 <img width="1920" height="829" alt="Pneumodetect 2" src="https://github.com/user-attachments/assets/9a4c9fd5-d3b3-4563-b497-f411202ad2ea" />
 <img width="1920" height="827" alt="Pneumodetect 3" src="https://github.com/user-attachments/assets/cf9c2a5e-f8db-45f7-9067-b4d10c2bbead" />
@@ -42,12 +42,6 @@ The system:
 - Classifies the image as **Normal** or **Pneumonia**
 - Assigns a **Risk Level** — Low / Medium / High
 - Provides **Medical Guidance** and precautionary tips
-
----
-
-## 🖥️ Screenshots:
-> Homepage — Upload your chest X-ray  
-> Result Page — Prediction + Risk Level + Medical Tips
 
 ---
 
