@@ -36,7 +36,7 @@ deep learning techniques applied to chest X-ray images.
 
 ---
 
-The system:
+## 💻 The system:
 - Accepts chest X-ray images uploaded by the user
 - Runs them through a trained CNN model
 - Classifies the image as **Normal** or **Pneumonia**
