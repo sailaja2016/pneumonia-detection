@@ -10,6 +10,28 @@ Pneumonia is a serious respiratory disease that requires early and accurate
 diagnosis. This project presents an automated pneumonia detection system using
 deep learning techniques applied to chest X-ray images.
 
+---
+
+Problem:
+> Pneumonia detection from chest X-rays is time-consuming
+> Manual diagnosis can be error-prone
+
+Solution:
+> Built a CNN-based model to classify X-rays
+> Integrated into Flask web app
+
+Results:
+> Accuracy: 80%
+> Binary classification: Normal vs Pneumonia
+
+Screenshots:
+<img width="1920" height="827" alt="Pneumodetect 1" src="https://github.com/user-attachments/assets/ee56e52e-45c4-44ee-8e6b-180fd29d6f48" />
+<img width="1920" height="829" alt="Pneumodetect 2" src="https://github.com/user-attachments/assets/9a4c9fd5-d3b3-4563-b497-f411202ad2ea" />
+<img width="1920" height="827" alt="Pneumodetect 3" src="https://github.com/user-attachments/assets/cf9c2a5e-f8db-45f7-9067-b4d10c2bbead" />
+<img width="1920" height="826" alt="Pneumodetect 4" src="https://github.com/user-attachments/assets/15474291-8590-4268-ae57-3a927b7544a7" />
+
+---
+
 The system:
 - Accepts chest X-ray images uploaded by the user
 - Runs them through a trained CNN model
