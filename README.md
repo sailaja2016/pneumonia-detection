@@ -13,16 +13,16 @@ deep learning techniques applied to chest X-ray images.
 ---
 
 Problem:
-> Pneumonia detection from chest X-rays is time-consuming
-> Manual diagnosis can be error-prone
+- Pneumonia detection from chest X-rays is time-consuming
+- Manual diagnosis can be error-prone
 
 Solution:
-> Built a CNN-based model to classify X-rays
-> Integrated into Flask web app
+- Built a CNN-based model to classify X-rays
+- Integrated into Flask web app
 
 Results:
-> Accuracy: 80%
-> Binary classification: Normal vs Pneumonia
+- Accuracy: 80%
+- Binary classification: Normal vs Pneumonia
 
 Screenshots:
 <img width="1920" height="827" alt="Pneumodetect 1" src="https://github.com/user-attachments/assets/ee56e52e-45c4-44ee-8e6b-180fd29d6f48" />
